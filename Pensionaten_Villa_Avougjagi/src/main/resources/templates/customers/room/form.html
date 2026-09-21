@@ -1,0 +1,122 @@
+<!DOCTYPE html>
+<html lang="sv" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Rum | Villa Avougjagi</title>
+    <link rel="stylesheet" th:href="@{/css/hotel.css}">
+</head>
+
+<body class="hotel-body">
+
+<header class="hotel-topbar">
+    <nav class="hotel-nav">
+        <a class="brand" th:href="@{/}">Villa Avougjagi</a>
+
+        <div class="nav-links">
+            <a th:href="@{/customers}">Gäster</a>
+            <a class="active" th:href="@{/rooms}">Rum</a>
+            <a th:href="@{/bookings}">Bokningar</a>
+            <a th:href="@{/bookings/new}">Boka vistelse</a>
+            <!-- <a th:href="@{/about}">Om oss</a> -->
+        </div>
+    </nav>
+</header>
+
+<main class="container-lux">
+
+    <section class="page-head">
+        <div>
+            <div class="kicker">Rum</div>
+
+            <h1 class="page-title"
+                th:text="${room.id == null ? 'Nytt rum' : 'Ändra rum'}">
+                Nytt rum
+            </h1>
+
+            <p class="lead">
+                Lägg till eller ändra rum. Extrasängar används bara för dubbelrum.
+            </p>
+        </div>
+    </section>
+
+    <section class="card-lux form-card">
+
+        <!-- Visar fel om rumsnumret redan finns -->
+        <div class="alert-lux alert-error"
+             th:if="${error}"
+             th:text="${error}">
+        </div>
+
+        <form th:action="@{/rooms/save}" th:object="${room}" method="post">
+
+            <input type="hidden" th:field="*{id}">
+
+            <div class="form-grid">
+
+                <div class="field">
+                    <label for="roomNumber">Rumsnummer</label>
+                    <input id="roomNumber"
+                           type="text"
+                           th:field="*{roomNumber}"
+                           placeholder="Ex. 201">
+
+                    <div class="error-text"
+                         th:if="${#fields.hasErrors('roomNumber')}"
+                         th:errors="*{roomNumber}">
+                    </div>
+                </div>
+
+                <div class="field">
+                    <label for="roomType">Rumstyp</label>
+
+                    <select id="roomType" th:field="*{roomType}">
+                        <option value="">Välj rumstyp</option>
+                        <option th:each="type : ${roomTypes}"
+                                th:value="${type.name()}"
+                                th:text="${type.displayName}">
+                        </option>
+                    </select>
+
+                    <div class="error-text"
+                         th:if="${#fields.hasErrors('roomType')}"
+                         th:errors="*{roomType}">
+                    </div>
+                </div>
+
+                <div class="field">
+                    <label for="extraBeds">Extrasängar</label>
+                    <input id="extraBeds"
+                           type="number"
+                           min="0"
+                           max="2"
+                           th:field="*{extraBeds}">
+                </div>
+
+                <div class="field">
+                    <label for="pricePerNight">Pris per natt</label>
+                    <input id="pricePerNight"
+                           type="number"
+                           min="0"
+                           th:field="*{pricePerNight}"
+                           placeholder="1495">
+                </div>
+
+            </div>
+
+            <div class="actions form-actions">
+                <button class="btn-luxury" type="submit">
+                    Spara rum
+                </button>
+
+                <a class="btn-outline-luxury" th:href="@{/rooms}">
+                    Tillbaka
+                </a>
+            </div>
+
+        </form>
+    </section>
+
+</main>
+
+</body>
+</html>

@@ -1,0 +1,182 @@
+<!DOCTYPE html>
+<html lang="sv" xmlns:th="http://www.thymeleaf.org">
+
+<head>
+    <meta charset="UTF-8">
+    <title>Villa Avougjagi</title>
+
+    <!-- Huvudfil för hotellets design -->
+    <link rel="stylesheet" th:href="@{/css/hotel.css}">
+</head>
+
+<body class="hotel-body">
+
+<!-- Toppmeny -->
+<header class="hotel-topbar">
+    <nav class="hotel-nav">
+
+        <!-- Logotyp / startsida -->
+        <a class="brand" th:href="@{/}">
+            Villa Avougjagi
+        </a>
+
+        <!-- Navigation -->
+        <div class="nav-links">
+            <a th:href="@{/customers}">Gäster</a>
+            <a th:href="@{/rooms}">Rum</a>
+            <a th:href="@{/bookings}">Bokningar</a>
+            <!-- <a th:href="@{/about}">Om oss</a> -->
+            <a class="active" th:href="@{/bookings/new}">
+                Boka vistelse
+            </a>
+        </div>
+    </nav>
+</header>
+
+<!-- Hero / startsida -->
+<section class="hero">
+
+    <!-- Mörk overlay för bättre kontrast -->
+    <div class="hero-overlay"></div>
+
+    <div class="hero-content">
+
+        <div class="kicker">
+            Pensionat • Stockholm
+        </div>
+
+        <h1>
+            Villa Avougjagi
+        </h1>
+
+        <p>
+            Ett modernt bokningssystem för gäster,
+            rum och exklusiva vistelser.
+        </p>
+
+        <!-- Knappar -->
+        <a class="actions hero-actions">
+
+            <a class="btn-luxury hero-btn"
+               th:href="@{/bookings/new}">
+
+                <span class="btn-icon">⌂</span>
+                <span>Sök lediga rum</span>
+            </a>
+
+            <a class="btn-outline-luxury hero-btn-outline"
+               th:href="@{/rooms}">
+
+                <span class="btn-icon">🛏</span>
+                <span>Se våra rum</span>
+            </a>
+
+        </a>
+    </div>
+</section>
+
+<!-- Sökpanel -->
+<section class="booking-panel">
+
+    <form class="grid-panel"
+          th:action="@{/bookings/search}"
+          method="post"
+          th:object="${booking}">
+
+        <input type="hidden" th:field="*{id}">
+        <input type="hidden" th:field="*{customerId}">
+        <input type="hidden" th:field="*{roomId}">
+
+        <!-- Check-in -->
+        <div class="field">
+            <label>Check-in</label>
+            <input type="date" th:field="*{checkInDate}">
+        </div>
+
+        <!-- Check-out -->
+        <div class="field">
+            <label>Check-out</label>
+            <input type="date" th:field="*{checkOutDate}">
+        </div>
+
+        <!-- Gäster -->
+        <div class="field">
+            <label>Antal gäster</label>
+            <input type="number"
+                   min="1"
+                   th:field="*{numberOfGuests}"
+                   placeholder="2">
+        </div>
+
+        <!-- Informationsfält -->
+        <div class="field">
+            <label>Status</label>
+            <input value="Kontrollerar lediga rum" readonly>
+        </div>
+
+        <!-- Sökknapp -->
+        <button class="btn-luxury search-btn"
+                type="submit">
+            Sök rum
+        </button>
+
+    </form>
+</section>
+
+<!-- Information -->
+<main class="container-lux">
+
+    <div class="section-heading">
+        <div class="kicker">Funktioner</div>
+
+        <h2>
+            Hotellsystem byggt med Spring Boot & Thymeleaf
+        </h2>
+
+        <p>
+            Systemet hanterar kunder, rum och bokningar
+            med validering och kontroll av dubbelbokningar.
+        </p>
+    </div>
+
+    <!-- Statistik / funktioner -->
+    <div class="stat-grid">
+
+        <section class="stat">
+            <strong>01</strong>
+
+            <span>
+                Registrera, uppdatera och hantera gäster.
+                Kunder med bokningar kan inte raderas.
+            </span>
+        </section>
+
+        <section class="stat">
+            <strong>02</strong>
+
+            <span>
+                Hantering av enkelrum, dubbelrum,
+                kapacitet och extrasängar.
+            </span>
+        </section>
+
+        <section class="stat">
+            <strong>03</strong>
+
+            <span>
+                Systemet söker automatiskt fram lediga rum
+                utan överlappande bokningar.
+            </span>
+        </section>
+
+    </div>
+</main>
+
+<!-- Footer -->
+<footer class="footer-note">
+    <p>Villa Avougjagi • Spring Boot • Thymeleaf • MySQL</p>
+    <small>Made by Alexander Zeljic & Boris Ivis</small>
+</footer>
+
+</body>
+</html>
